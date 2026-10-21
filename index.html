@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Haldi & Mehndi – Invitation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Hind:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --haldi: #f7c316;
+        --marigold: #f08a0c;
+        --ivory: #fff8e7;
+        --mehndi: #4a6b2a;
+        --gold: #c99a2e;
+        --ink: #4b2e0a;
+        --outer: #2a1a05;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --outer: #120a02;
+        }
+      }
+      :root[data-theme="dark"] {
+        --outer: #120a02;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: var(--outer);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Hind", "Noto Sans Devanagari", sans-serif;
+        color: var(--ink);
+        overflow: hidden;
+      }
+      #stage {
+        position: relative;
+        width: min(100vw, calc(100dvh * 9 / 16));
+        height: min(100dvh, calc(100vw * 16 / 9));
+        container-type: inline-size;
+        overflow: hidden;
+        background: radial-gradient(
+          ellipse at 50% 30%,
+          #fffdf3,
+          var(--ivory) 60%,
+          #fbe7b0
+        );
+      }
+      h1,
+      h2,
+      h3,
+      .fancy {
+        font-family: "Yatra One", "Hind", serif;
+        font-weight: 400;
+      }
+      .page {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+      }
+      .page.on {
+        display: flex;
+      }
+      .glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 45%,
+          rgba(247, 195, 22, 0.35),
+          transparent 60%
+        );
+        animation: pulse 5s ease-in-out infinite;
+        pointer-events: none;
+      }
+      @keyframes pulse {
+        50% {
+          opacity: 0.5;
+        }
+      }
+      /* garlands */
+      .garland {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        pointer-events: none;
+        transform-origin: 50% 0;
+        z-index: 3;
+      }
+      .garland.top {
+        top: 0;
+        animation: sway 6s ease-in-out infinite;
+      }
+      .garland.b {
+        animation-delay: -3s;
+      }
+      @keyframes sway {
+        50% {
+          transform: rotate(1.2deg);
+        }
+      }
+      .lights circle {
+        animation: tw 2s ease-in-out infinite;
+      }
+      @keyframes tw {
+        50% {
+          opacity: 0.25;
+        }
+      }
+      /* petals */
+      .petal {
+        position: absolute;
+        top: -6%;
+        width: 2.6cqw;
+        height: 3.6cqw;
+        border-radius: 60% 0 60% 0;
+        background: var(--marigold);
+        opacity: 0.8;
+        animation: fall linear infinite;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .petal.y {
+        background: var(--haldi);
+      }
+      @keyframes fall {
+        to {
+          transform: translate(8cqw, 115cqh) rotate(540deg);
+        }
+      }
+      /* buttons */
+      .btn {
+        font-family: "Yatra One", "Hind", serif;
+        font-size: 4.4cqw;
+        color: #fff;
+        border: 0;
+        border-radius: 99px;
+        padding: 3cqw 7cqw;
+        background: linear-gradient(135deg, var(--marigold), #d9560b);
+        box-shadow:
+          0 0 0 0.6cqw var(--gold),
+          0 2cqw 5cqw rgba(160, 80, 0, 0.35);
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+        animation: bob 2.6s ease-in-out infinite;
+      }
+      .btn.g {
+        background: linear-gradient(135deg, #6b8f3a, var(--mehndi));
+      }
+      .btn:focus-visible,
+      .icon:focus-visible,
+      .frame:focus-within {
+        outline: 3px solid var(--mehndi);
+        outline-offset: 3px;
+      }
+      @keyframes bob {
+        50% {
+          transform: translateY(-1cqw);
+        }
+      }
+      .icon {
+        position: absolute;
+        z-index: 20;
+        width: 10cqw;
+        height: 10cqw;
+        border-radius: 50%;
+        border: 0.4cqw solid var(--gold);
+        background: var(--ivory);
+        font-size: 5cqw;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+      #music {
+        right: 3cqw;
+        top: calc(3cqw + env(safe-area-inset-top, 0px));
+      }
+      .back {
+        left: 3cqw;
+        top: calc(3cqw + env(safe-area-inset-top, 0px));
+      }
+      /* gate */
+      #gate {
+        position: absolute;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5cqw;
+        text-align: center;
+        background: radial-gradient(circle, #ffe9a0, #f6b21a 70%, #e0840a);
+        transition:
+          opacity 1s,
+          visibility 1s;
+      }
+      #gate.off {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #gate .om {
+        font-size: 22cqw;
+        animation: pulse 3s infinite;
+      }
+      #gate p {
+        font-size: 5cqw;
+        color: var(--ink);
+        padding: 0 8cqw;
+      }
+      /* curtains */
+      .curtain {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        z-index: 40;
+        background: repeating-linear-gradient(
+          90deg,
+          #f08a0c 0 3cqw,
+          #f7c316 3cqw 6cqw
+        );
+        transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        pointer-events: none;
+      }
+      #cl {
+        left: 0;
+        transform: translateX(-101%);
+        border-right: 1.2cqw solid var(--gold);
+      }
+      #cr {
+        right: 0;
+        transform: translateX(101%);
+        border-left: 1.2cqw solid var(--gold);
+      }
+      .shut #cl,
+      .shut #cr {
+        transform: none;
+      }
+      /* page 1 */
+      .arch {
+        margin-top: 24cqw;
+        width: 84cqw;
+        flex: 1;
+        max-height: 128cqw;
+        border: 1.4cqw solid var(--gold);
+        border-radius: 42cqw 42cqw 3cqw 3cqw;
+        background: rgba(255, 250, 235, 0.85);
+        box-shadow:
+          inset 0 0 0 1cqw var(--haldi),
+          0 0 9cqw rgba(240, 138, 12, 0.55);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3cqw;
+        text-align: center;
+        padding: 12cqw 6cqw 5cqw;
+        z-index: 4;
+        position: relative;
+      }
+      .arch h2 {
+        font-size: 5.6cqw;
+        color: var(--marigold);
+      }
+      .arch h1 {
+        font-size: 9cqw;
+        color: #c2410c;
+        text-shadow: 0 0.5cqw 0 var(--haldi);
+      }
+      .arch p {
+        font-size: 5cqw;
+        line-height: 1.45;
+      }
+      .diyas {
+        display: flex;
+        gap: 6cqw;
+        margin: 3cqw 0 5cqw;
+        z-index: 4;
+      }
+      .diya {
+        width: 9cqw;
+        height: 4.5cqw;
+        background: #b5651d;
+        border-radius: 0 0 9cqw 9cqw;
+        position: relative;
+      }
+      .diya:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        width: 2.4cqw;
+        height: 4.6cqw;
+        margin-left: -1.2cqw;
+        border-radius: 50% 50% 50% 50%/70% 70% 30% 30%;
+        background: radial-gradient(#fff6b0, #ffb300 60%, #f57c00);
+        box-shadow: 0 0 5cqw 2cqw rgba(255, 170, 0, 0.7);
+        animation: flick 0.5s infinite alternate;
+      }
+      @keyframes flick {
+        to {
+          transform: scale(1.15, 0.9);
+          opacity: 0.85;
+        }
+      }
+      /* page 2 */
+      #p2 {
+        padding-top: 0;
+      }
+      .half {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 4cqw;
+        padding: 3cqw 5cqw;
+        position: relative;
+        z-index: 4;
+        width: 100%;
+      }
+      .half.h {
+        background: linear-gradient(180deg, #fff2b8, #ffe58a);
+        padding-top: 15cqw;
+      }
+      .half.m {
+        background: linear-gradient(180deg, #e7f0c9, #cfe2a3);
+        padding-bottom: 17cqw;
+      }
+      .divider {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1.2cqw;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          var(--haldi),
+          var(--gold),
+          transparent
+        );
+        z-index: 6;
+        transform: translateY(-50%);
+      }
+      .divider:after {
+        content: "🌼";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 7cqw;
+      }
+      .frame {
+        flex: 0 0 36cqw;
+        aspect-ratio: 3/4;
+        border-radius: 18cqw 18cqw 3cqw 3cqw;
+        border: 1.2cqw solid var(--gold);
+        box-shadow:
+          0 0 0 1cqw var(--ivory),
+          0 0 5cqw rgba(201, 154, 46, 0.7);
+        background: #fff8e1 center/cover no-repeat;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        font-size: 3.4cqw;
+        color: #8a6a1c;
+      }
+      .frame input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .frame.has span {
+        display: none;
+      }
+      .txt {
+        flex: 1;
+        text-align: left;
+      }
+      .txt h3 {
+        font-size: 5.4cqw;
+        margin-bottom: 1.6cqw;
+        color: #b45309;
+      }
+      .m .txt h3 {
+        color: var(--mehndi);
+      }
+      .txt p {
+        font-size: 3.7cqw;
+        line-height: 1.45;
+        margin-bottom: 1.6cqw;
+      }
+      #p2 .btn {
+        position: absolute;
+        bottom: 3cqw;
+        font-size: 3.6cqw;
+        padding: 2.4cqw 5cqw;
+        left: 50%;
+        translate: -50% 0;
+        animation: none;
+        white-space: nowrap;
+      }
+      .vine {
+        position: absolute;
+        pointer-events: none;
+        font-size: 7cqw;
+        opacity: 0.85;
+      }
+      /* page 3 */
+      .card {
+        margin-top: 25cqw;
+        width: 96cqw;
+        max-height: calc(100% - 30cqw);
+        overflow: auto;
+        border: 1.2cqw double var(--gold);
+        border-radius: 4cqw;
+        background: rgba(255, 252, 240, 0.93);
+        box-shadow: 0 2cqw 8cqw rgba(160, 100, 0, 0.3);
+        padding: 5cqw;
+        text-align: center;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        gap: 2.4cqw;
+        position: relative;
+      }
+      .card h2 {
+        font-size: 7cqw;
+        color: #c2410c;
+      }
+      .card p {
+        font-size: 4cqw;
+        line-height: 1.45;
+      }
+      .det {
+        border-top: 0.4cqw solid var(--gold);
+        border-bottom: 0.4cqw solid var(--gold);
+        padding: 2.4cqw 0;
+        text-align: center;
+        display: grid;
+        gap: 1.4cqw;
+      }
+      .det h3 {
+        text-align: center;
+        font-size: 4.8cqw;
+        color: var(--mehndi);
+      }
+      .det p {
+        font-size: 4cqw;
+      }
+      .ph {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .row {
+        display: flex;
+        gap: 2.4cqw;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1cqw;
+      }
+      .row .btn {
+        font-size: 3.5cqw;
+        padding: 2.4cqw 4cqw;
+        animation: none;
+      }
+      #welcome {
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        background: rgba(255, 248, 231, 0.9);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 1s,
+          visibility 1s;
+      }
+      #welcome.show {
+        opacity: 1;
+        visibility: visible;
+      }
+      #welcome h1 {
+        font-size: 11cqw;
+        color: #c2410c;
+        transform: scale(0.6);
+        transition: transform 1s cubic-bezier(0.3, 1.6, 0.5, 1);
+      }
+      #welcome.show h1 {
+        transform: none;
+      }
+      .burst {
+        position: absolute;
+        font-size: 7cqw;
+        z-index: 35;
+        pointer-events: none;
+        animation: burst 1.8s ease-out forwards;
+      }
+      @keyframes burst {
+        to {
+          transform: translate(var(--x), var(--y)) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01s !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01s !important;
+        }
+        .petal {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div id="gate">
+        <div class="om">🪔</div>
+        <h1 style="font-size: 9cqw; color: #7c2d12">You're Invited</h1>
+        <p>Tap below to view Invite</p>
+        <button class="btn" id="open">Tap to Open Invitation</button>
+      </div>
+
+      <button
+        class="icon"
+        id="music"
+        aria-label="Music on or off"
+        title="Music"
+      >
+        🔊
+      </button>
+      <div class="curtain" id="cl"></div>
+      <div class="curtain" id="cr"></div>
+
+      <!-- PAGE 1 -->
+      <section class="page" id="p1">
+        <div class="glow"></div>
+        <div class="garland top" data-g="360,90,26,18"></div>
+        <div
+          class="garland top b"
+          data-g="360,120,40,14"
+          style="opacity: 0.95"
+        ></div>
+        <div class="arch">
+          <h2>🌼 A Joyful Occasion 🌼</h2>
+          <h1>There's a Wedding at Home!</h1>
+          <p>
+            To celebrate, we are hosting<br />a lovely Haldi and Mehndi ceremony
+            💛🌿
+          </p>
+          <p>Your presence will make our<br />happiness even more beautiful.</p>
+        </div>
+        <div class="diyas">
+          <i class="diya"></i><i class="diya"></i><i class="diya"></i>
+        </div>
+        <button class="btn" data-go="2" style="margin-bottom: 6cqw">
+          Come, Join Our Joy ❤️
+        </button>
+      </section>
+
+      <!-- PAGE 2 -->
+      <section class="page" id="p2">
+        <button class="icon back" data-go="1" aria-label="Back">‹</button>
+        <div class="garland top" data-g="360,80,22,18"></div>
+        <div class="half h">
+          <label
+            class="frame has"
+            data-k="photo1"
+            style="
+              background-image: url(https://i.pinimg.com/736x/0c/d8/3d/0cd83dfea30098affc3829dfb48e8f6b.jpg);
+            "
+          >
+            <input type="file" accept="image/*" disabled />
+          </label>
+          <div class="txt">
+            <h3>💛 Our Dear Didi's Haldi 💛</h3>
+            <p>
+              The scent of haldi, the love of family,<br />smiles on every face
+              and joy all around!
+            </p>
+            <p>
+              Come, make Didi's Haldi ceremony even more special with your
+              presence.
+            </p>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="half m">
+          <label
+            class="frame has"
+            data-k="photo1"
+            style="
+              background-image: url(https://png.pngtree.com/png-vector/20221215/ourmid/pngtree-indian-wedding-mehendi-couple-for-ceremony-girl-wearing-greencolour-outfit-transparent-png-image_6524862.png);
+            "
+          >
+            <input type="file" accept="image/*" disabled />
+          </label>
+          <div class="txt">
+            <h3>🌿 The Mehndi Evening 🌿</h3>
+            <p>
+              Mehndi on our hands, joy in our hearts,<br />the colours of
+              happiness with loved ones!
+            </p>
+            <p>Come, join this lovely celebration and double our happiness.</p>
+          </div>
+          <span class="vine" style="right: 2cqw; top: 3cqw">🌿</span
+          ><span class="vine" style="left: 2cqw; bottom: 14cqw">🍃</span>
+        </div>
+        <button class="btn g" data-go="3">
+          Next — See the Event Details ✨
+        </button>
+      </section>
+
+      <!-- PAGE 3 -->
+      <section class="page" id="p3">
+        <button class="icon back" data-go="2" aria-label="Back">‹</button>
+        <div class="glow"></div>
+        <div class="garland top" data-g="360,100,30,18"></div>
+        <div class="garland top b" data-g="360,70,18,20"></div>
+        <div class="card">
+          <h2>🌸 Warm Invitation 🌸</h2>
+          <p>
+            On this auspicious occasion at our home,<br />a Haldi and Mehndi
+            ceremony has been arranged.
+          </p>
+          <p>
+            Please come with your family, share your love and blessings, and
+            make our happiness shine even brighter.
+          </p>
+          <div class="det">
+            <h3>Event Details</h3>
+            <p>📅 Date: <span class="ph" id="d">hh</span></p>
+            <p>⏰ Time: <span class="ph" id="t"></span></p>
+            <p>📍 Venue: <span class="ph" id="v"></span></p>
+          </div>
+          <p class="fancy" style="color: #c2410c">
+            We'll be waiting for you! ❤️
+          </p>
+          <p>
+            Come, let's fill these beautiful moments with laughter, music and
+            lots of happiness.
+          </p>
+          <p>With love,<br /><b class="ph" id="f"></b></p>
+          <div class="row">
+            <button class="btn g" id="dir">📍 Get Directions</button>
+            <button class="btn" id="join">❤️ Join Our Celebration</button>
+          </div>
+        </div>
+        <div id="welcome"><h1>Welcome!</h1></div>
+      </section>
+    </div>
+
+    <script>
+      /* ====== EDIT HERE ====== */
+      const CONFIG = {
+        date: "20th November 2026",
+        time: "11:00 A.M (Haldi) | 6:00 P.M (Mehndi)",
+        venue: "Bhole Baba Homse, Agra",
+        family: "Kushwaha Family",
+        mapsQuery:
+          "Bhole homes colony, Chamrauli, Agra, Bagda, Uttar Pradesh 282004", // e.g. "Hotel Clarks Shiraz, Agra" – used by Get Directions
+        audioSrc: "Sadi_gali.mp3", // e.g. "music.mp3" (royalty-free track). Empty = built-in soft tune
+        photo1: "",
+        photo2: "", // optional image URLs/data to pre-fill the two photos
+      };
+      /* ======================= */
+      const $ = (s) => document.querySelector(s),
+        $$ = (s) => [...document.querySelectorAll(s)];
+      $("#d").textContent = CONFIG.date;
+      $("#t").textContent = CONFIG.time;
+      $("#v").textContent = CONFIG.venue;
+      $("#f").textContent = CONFIG.family;
+
+      /* garlands */
+      const NS = "http://www.w3.org/2000/svg";
+      $$(".garland").forEach((g) => {
+        const [w, h, sag, n] = g.dataset.g.split(",").map(Number);
+        let s = `<svg viewBox="0 0 ${w} ${h}" width="100%"><path d="M0 8Q${w / 2} ${8 + sag * 2} ${w} 8" fill="none" stroke="#3f6b21" stroke-width="3"/>`;
+        for (let i = 0; i <= n; i++) {
+          const t = i / n,
+            x = t * w,
+            y = 8 + sag * 2 * t * (1 - t) * 2;
+          s += `<circle cx="${x}" cy="${y}" r="8" fill="${i % 2 ? "#f08a0c" : "#f7b500"}"/><circle cx="${x}" cy="${y}" r="3.6" fill="${i % 2 ? "#f7c316" : "#d9560b"}"/>`;
+          if (i % 3 == 1) {
+            const L = h - y - 10 - (i % 2) * 14;
+            s += `<line x1="${x}" y1="${y + 8}" x2="${x}" y2="${y + 8 + L * 0.6}" stroke="#3f6b21" stroke-width="1.5"/><circle cx="${x}" cy="${y + 10 + L * 0.6}" r="5" fill="#f08a0c"/>`;
+          }
+        }
+        s += `<g class="lights">`;
+        for (let i = 0; i <= n * 1.5; i++) {
+          const t = i / (n * 1.5),
+            x = t * w,
+            y = 14 + sag * 2 * t * (1 - t) * 2;
+          s += `<circle cx="${x}" cy="${y}" r="2.4" fill="#fff3a0" style="animation-delay:${(i % 5) * 0.4}s"/>`;
+        }
+        g.innerHTML = s + "</g></svg>";
+      });
+
+      /* petals */
+      $$(".page").forEach((p) => {
+        for (let i = 0; i < 10; i++) {
+          const e = document.createElement("i");
+          e.className = "petal" + (i % 2 ? " y" : "");
+          e.style.cssText = `left:${Math.random() * 95}%;animation-duration:${9 + Math.random() * 8}s;animation-delay:${-Math.random() * 14}s`;
+          p.appendChild(e);
+        }
+      });
+
+      /* photos: tap a frame to choose a picture (layout stays the same) */
+      $$(".frame").forEach((f) => {
+        const set = (u) => {
+          f.style.backgroundImage = `url("${u}")`;
+          f.classList.add("has");
+        };
+        if (CONFIG[f.dataset.k]) set(CONFIG[f.dataset.k]);
+        f.querySelector("input").onchange = (e) => {
+          const fl = e.target.files[0];
+          if (fl) set(URL.createObjectURL(fl));
+        };
+      });
+
+      /* navigation with curtain */
+      const stage = $("#stage");
+      let cur = 1,
+        busy = false;
+      function show(n) {
+        $$(".page").forEach((p) => p.classList.toggle("on", p.id === "p" + n));
+        cur = n;
+      }
+      function go(n) {
+        if (busy || n === cur) return;
+        busy = true;
+        stage.classList.add("shut");
+        setTimeout(() => {
+          show(n);
+          stage.classList.remove("shut");
+          setTimeout(() => (busy = false), 800);
+        }, 850);
+      }
+      $$("[data-go]").forEach((b) => (b.onclick = () => go(+b.dataset.go)));
+
+      /* music: ONE audio source for all pages */
+      let ctx,
+        master,
+        audioEl,
+        muted = false,
+        playing = false;
+      function startSynth() {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        master = ctx.createGain();
+        master.gain.value = 0.5;
+        master.connect(ctx.destination);
+        const lp = ctx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.value = 1800;
+        lp.connect(master);
+        const root = 293.66,
+          sc = [0, 2, 4, 7, 9, 12, 14, 16],
+          mel = [
+            4, 5, 4, 2, 3, 2, 0, 2, 4, 7, 5, 4, 2, 3, 4, 2, 0, 0, 2, 4, 5, 7, 5,
+            4, 2, 4, 2, 0, -1, 0, 2, 0,
+          ];
+        const bpm = 96,
+          beat = 60 / bpm;
+        let next = ctx.currentTime + 0.2,
+          i = 0;
+        const note = (f, t, d, type, g) => {
+          const o = ctx.createOscillator(),
+            a = ctx.createGain();
+          o.type = type;
+          o.frequency.value = f;
+          const v = ctx.createOscillator(),
+            vg = ctx.createGain();
+          v.frequency.value = 5.5;
+          vg.gain.value = f * 0.006;
+          v.connect(vg);
+          vg.connect(o.frequency);
+          v.start(t);
+          v.stop(t + d + 0.1);
+          a.gain.setValueAtTime(0, t);
+          a.gain.linearRampToValueAtTime(g, t + 0.05);
+          a.gain.exponentialRampToValueAtTime(0.001, t + d);
+          o.connect(a);
+          a.connect(lp);
+          o.start(t);
+          o.stop(t + d + 0.1);
+        };
+        const thump = (t, f, g) => {
+          const o = ctx.createOscillator(),
+            a = ctx.createGain();
+          o.frequency.setValueAtTime(f, t);
+          o.frequency.exponentialRampToValueAtTime(f / 2.2, t + 0.18);
+          a.gain.setValueAtTime(g, t);
+          a.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+          o.connect(a);
+          a.connect(master);
+          o.start(t);
+          o.stop(t + 0.25);
+        };
+        setInterval(() => {
+          while (next < ctx.currentTime + 0.5) {
+            const d = mel[i % mel.length],
+              f =
+                root *
+                Math.pow(
+                  2,
+                  ((d < 0 ? -1 : sc[Math.min(d, 7)]) / 12) * (d < 0 ? 1 : 1),
+                ) *
+                (d < 0 ? 0.94 : 1);
+            note(f, next, beat * 1.7, "sawtooth", 0.07);
+            note(root / 2, next, beat * 2, "sine", 0.06);
+            thump(next, 150, 0.35);
+            if (i % 2) {
+              thump(next + beat * 0.5, 220, 0.18);
+            }
+            next += beat;
+            i++;
+          }
+        }, 120);
+      }
+      function startMusic() {
+        if (playing) return;
+        playing = true;
+        if (CONFIG.audioSrc) {
+          audioEl = new Audio(CONFIG.audioSrc);
+          audioEl.loop = true;
+          audioEl.volume = 0.6;
+          audioEl.play().catch(() => {
+            audioEl = null;
+            startSynth();
+          });
+        } else startSynth();
+      }
+      $("#music").onclick = () => {
+        muted = !muted;
+        $("#music").textContent = muted ? "🔇" : "🔊";
+        if (audioEl) audioEl.muted = muted;
+        if (master) master.gain.value = muted ? 0 : 0.5;
+      };
+
+      $("#open").onclick = () => {
+        startMusic();
+        $("#gate").classList.add("off");
+        show(1);
+      };
+
+      /* page 3 buttons */
+      $("#dir").onclick = () => {
+        const q =
+          CONFIG.mapsQuery || (CONFIG.venue.includes("[") ? "" : CONFIG.venue);
+        if (!q) {
+          alert("Venue address is not set yet. Add it in CONFIG.mapsQuery.");
+          return;
+        }
+        window.open(
+          "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(q),
+          "_blank",
+        );
+      };
+      $("#join").onclick = () => {
+        const w = $("#welcome");
+        w.classList.add("show");
+        for (let i = 0; i < 28; i++) {
+          const e = document.createElement("span");
+          e.className = "burst";
+          e.textContent = ["🌼", "🌸", "🏵️", "🪷", "✨"][i % 5];
+          e.style.left = "50%";
+          e.style.top = "55%";
+          const a = Math.random() * 6.28,
+            r = 25 + Math.random() * 45;
+          e.style.setProperty("--x", Math.cos(a) * r + "cqw");
+          e.style.setProperty("--y", Math.sin(a) * r + "cqw");
+          $("#p3").appendChild(e);
+          setTimeout(() => e.remove(), 1900);
+        }
+        setTimeout(() => w.classList.remove("show"), 3800);
+      };
+    </script>
+  </body>
+</html>
